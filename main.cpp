@@ -63,21 +63,17 @@ string itc_slice_str(string str, int start, int end){
     }
 }
 
-string not_float(string Float){ //int in 2
-    long long number = ToInt(Float), step = 1;
+string not_float(long float Float){ //int in 2
     string ans = "";
-    for(int i = 0; i < itc_len(Float); i++){
-        step = step * 10;
-    }
     for(int i = 0; i < 23; i++){
         number = number * 2;
-        if (itc_len(toStr(number)) > itc_len(Float)){
+        if (int(Float) == 1){
             ans += "1";
         }
         else{
             ans += "0";
         }
-        number = number % step;
+        Float -= 1.0;
     }
     return ans;
 }
@@ -97,54 +93,21 @@ long long not_num(long long num, int type = 2) //float in 2
 }
 
 string exp_mantis(string str){
-    long long num, kol;
-    string point, int_num, drob, mantis, floating, y, exp;
-    for(int i = 0; i < itc_len(str); i++){
-        if(str[i] >= '0' and str[i] <= '9'){
-            point += str[i];
-        }
-        else{ //end of int, start of float
-            int_num += toStr(not_num(ToInt(point)));
-        }
-        if (str[i + 1] == '\0'){ //end of number
-            drob += point;
-            point = "";
-        }
+    string int_num = "", float_num;
+    for (int i < 0; str[i] != '.'; i++){
+        int_num += str[i];
     }
-    floating = not_float(drob);
-    kol = 0;
-    if (ToInt(int_num) == 0){
-        while(ToInt(int_num) != 1){
-            int_num += floating[0];
-            floating = itc_slice_str(floating, 1, itc_len(floating) - 1);
-            mantis += floating;
-            kol--;
-        }
-        mantis += "0";
+    for (int j = i + 1; j < itc_len(str); j++){
+        float_num += str[i];
     }
-    else if (ToInt(int_num) != 0){
-        mantis += itc_slice_str(int_num, 1, itc_len(int_num) - 1);
-        mantis += floating;
-        mantis = itc_slice_str(mantis, 0, 22);
-        kol = itc_len(int_num) - 1;
-    }
-    num = 127 + kol;
-    y = toStr(not_num(num));
-    if (itc_len(y) < 8){
-        while(itc_len(exp) < 8 - itc_len(y)){
-            exp += '0';
-        }
-        exp += y;
-    }
-    else {
-        exp += y;
-    }
+    long long int_part = ToInt(int_num);
+    long float float_part = 1 / ToInt(float_num) * itc_pow(10, itc_len())
     return exp + mantis;
 }
 
 string iee_754(string str){
     string ans = "";
-    if (str[0] == '-')
+    if (str[0] == '-'){
         ans += "1";
     else
         ans += "0";
